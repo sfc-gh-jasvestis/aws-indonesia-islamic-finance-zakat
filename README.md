@@ -9,7 +9,6 @@ Indonesia's zakat potential is US$14 billion annually, but only 3% is collected 
 ```mermaid
 flowchart LR
     KIN[Kinesis] --> SPS[Snowpipe Streaming]
-    SP --> RAW[RAW Tables]
     SPS --> RAW
     RAW --> DT[Dynamic Tables]
     DT --> ML[ML Functions]
