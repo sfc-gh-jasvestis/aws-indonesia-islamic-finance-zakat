@@ -119,7 +119,7 @@ Industry research and Snowflake customer outcomes:
 - **Indonesia's zakat collection reached IDR 26T ($1.6B) in 2024 — but potential is estimated at IDR 327T ($20B)** — [BAZNAS](https://baznas.go.id/)
 - **Only 30% of obligated Muslims in Indonesia pay zakat through official channels — digital platforms increasing compliance** — [KNEKS Indonesia](https://kneks.go.id/en/ikhtisar)
 - **BAZNAS digitized zakat collection grew 65% in 2024 — mobile payments and e-wallets driving adoption** — [BAZNAS Digital Report](https://baznas.go.id/)
-- **Mastercard uses Snowflake to enable financial inclusion analytics across emerging markets** — [Snowflake Financial Services](https://www.snowflake.com/en/data-cloud/financial-services/)
+- **Western Union** (Snowflake customer): processes 1B+ cross-border transactions on Snowflake with real-time compliance monitoring across 200+ countries -- [snowflake.com/customers/western-union](https://www.snowflake.com/en/customers/all-customers/case-study/western-union/)
 
 ## Key Demo Numbers
 
