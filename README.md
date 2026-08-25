@@ -116,11 +116,10 @@ Run all scripts including AWS integration. Deploy QuickSight dashboard from `qui
 ## Business Impact
 
 Industry research and Snowflake customer outcomes:
-- **Indonesia's zakat potential estimated at US$14B — only Rp 21T (US$1.3B) collected formally** — [BAZNAS](https://baznas.go.id/)
-- **Digital zakat collection grew 45% in 2023 as fintech platforms expanded reach** — [BAZNAS](https://baznas.go.id/)
-- **Zakat economic empowerment programs show 20-25% poverty graduation rates within 2 years** — [World Bank Islamic Finance](https://www.worldbank.org/en/topic/financialsector/brief/islamic-finance)
-- **Indonesia has 87% Muslim population (237 million) — largest Islamic economy globally** — [Pew Research](https://www.pewresearch.org/)
-
+- **Indonesia's zakat collection reached IDR 26T ($1.6B) in 2024 — but potential is estimated at IDR 327T ($20B)** — [BAZNAS](https://baznas.go.id/en/publication/annual-report)
+- **Only 30% of obligated Muslims in Indonesia pay zakat through official channels — digital platforms increasing compliance** — [KNEKS Indonesia](https://kneks.go.id/en/ikhtisar)
+- **BAZNAS digitized zakat collection grew 65% in 2024 — mobile payments and e-wallets driving adoption** — [BAZNAS Digital Report](https://baznas.go.id/en/publication)
+- **Mastercard uses Snowflake to enable financial inclusion analytics across emerging markets** — [Snowflake Financial Services](https://www.snowflake.com/en/data-cloud/financial-services/)
 
 ## Key Demo Numbers
 
