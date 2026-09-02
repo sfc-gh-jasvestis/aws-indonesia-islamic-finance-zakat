@@ -1,106 +1,79 @@
-# Demo Script: Zakat & Waqf Management
-## ~4-Minute Recorded Walkthrough
-**Format**: Screen recording with voiceover
-**Target**: Customer meeting / booth loop / social share
-**Narrative**: "Snowflake optimizes zakat impact — Dynamic Tables maintain real-time collection and distribution ledgers, ML.FORECAST projects seasonal patterns, and Cortex AI measures beneficiary outcomes and generates donor impact reports"
-**Demo Mode**: Open app with `?demo=true` for presenter notes
+# Zakat & Waqf Management
 
----
+**Indonesia - Islamic Finance**
+Use case: Zakat & Social Finance
 
-## Two Personas
+> Data-driven zakat collection and distribution for Indonesia's US$14B potential — ML.FORECAST predicts collection trends, Dynamic Tables build real-time muzakki/mustahik dashboards, and Cortex AI generates impact reports.
 
-| Persona | Role | Tool | What they care about |
-|---|---|---|---|
-| **Prof. Dr. Noor Achmad** | Director of Collection | React App (SPCS) | Collection targets, donor retention, digital channel growth, Ramadan surge planning |
-| **Fatimah Zahra** | Impact Measurement Analyst | Amazon QuickSight | Distribution equity, beneficiary outcomes, geographic coverage, poverty reduction metrics |
+## Why Snowflake
 
----
+Snowflake optimizes zakat impact — Dynamic Tables maintain real-time collection and distribution ledgers, ML.FORECAST projects seasonal patterns, and Cortex AI measures beneficiary outcomes and generates donor impact reports
 
-## What's Built
+- **ML.FORECAST on zakat collection trends** - Only demo using ML.FORECAST for Islamic social finance collection prediction
+- **Ramadan seasonal surge planning** - ML-enabled resource planning for annual zakat collection peak
+- **Poverty graduation rate tracking** - Unique impact metric for zakat economic empowerment programs
+- **Indonesian zakat national context** - US$14B potential, 2M+ muzakki, 34 provinces, 8 asnaf distribution model
 
-| Layer | Component | Detail |
+## What is deployed
+
+| | |
+|---|---|
+| Database | `ID_ISLAMIC_FINANCE_ZAKAT` |
+| Service | `ID_ISLAMIC_FINANCE_ZAKAT_APP` |
+| Compute pool | `SEA_DEMOS_INDONESIA_POOL` |
+| Dimension table | `RAW.IMPACT_REPORTS` (20 rows) |
+| Fact table | `RAW.COLLECTIONS` (250,000 rows, 90 days) |
+| Curated layer | `CURATED.PERFORMANCE_SUMMARY`, `CURATED.TREND_ANALYSIS`, `CURATED.KPI_SUMMARY` |
+| Currency | IDR (Rp) |
+
+Regions in play: Jakarta, North Sumatra, Riau, East Kalimantan, Sulawesi
+Segments: Zakat Maal, Zakat Fitrah, Cash Waqf, Productive Waqf
+
+Dynamic tables are created suspended and refreshed on demand:
+
+```bash
+./refresh_demo_data.sh ID_ISLAMIC_FINANCE_ZAKAT
+```
+
+## KPI cards
+
+Every card below is served live from `CURATED.KPI_SUMMARY`. The app keeps the
+original literal as a fallback, so it still renders if Snowflake is unreachable.
+
+| Card | Value | Backed by |
 |---|---|---|
-| **RAW** | 6 tables | MUZAKKI (2000000), COLLECTIONS (5000000), MUSTAHIK (500000), DISTRIBUTIONS (1000000), PROGRAMS (200), IMPACT_REPORTS (80) |
-| **CURATED** | 4 Dynamic Tables | COLLECTION_DASHBOARD, DISTRIBUTION_EQUITY, DONOR_SEGMENTATION, IMPACT_METRICS |
-| **ML** | ML.FORECAST | Forecasting + anomaly detection |
-| **AI** | COMPLETE, SUMMARIZE, AI_CLASSIFY | Classification + extraction |
-| **Search** | Cortex Search | 80 documents indexed |
-| **Agent** | ZAKAT_INTELLIGENCE_AGENT | Semantic View + Search tools |
+| Zakat Collected (YTD) | `Rp 18.4T` | total across Impact Reports |
+| Beneficiaries Reached | `8.4M` | total across Impact Reports |
+| Distribution Efficiency | `94%` | average per event |
+| Collection Growth | `+12%` | average per event |
+| Poverty Alleviation | `1.2M families` | total across Impact Reports |
+| Education Scholarships | `84K` | total across Impact Reports |
+| Healthcare Support | `420K` | total across Impact Reports |
 
 
----
+## Demo flow
 
-## The Story
+1. National Overview
+2. Distribution & Impact
+3. Predictive Planning
+4. Ask AI
+5. Architecture & Data
 
-Indonesia's zakat potential is US$14 billion annually, but only 3% is collected through formal channels. BAZNAS must increase digital collection, retain high-value donors through personalized engagement, and prove impact through data-driven program evaluation — all while ensuring equitable distribution across 34 provinces to 8 asnaf categories.
+## Talking points
 
----
+- **Rp 21T** - annual zakat collection (23% YoY growth)
+- **2M muzakki** - registered zakat payers
+- **500K mustahik** - beneficiaries served across 34 provinces
+- **64% digital** - collection via digital channels
+- **23% graduation** - poverty graduation rate from economic programs
 
-## Script
+## Business impact
 
-### [0:00–0:45] NATIONAL OVERVIEW
-
-**Show**: National Overview tab
-
-> "Rp 21 trillion collected from 2 million muzakki — 23% growth year-on-year."
-
-**Action**: Point at Rp 21T collection and 23% growth
-
-### [0:45–1:30] DISTRIBUTION & IMPACT
-
-**Show**: Distribution & Impact tab
-
-> "500,000 mustahik served across 34 provinces — 8 asnaf categories."
-
-**Action**: Show distribution map by province
-
-### [1:30–2:15] PREDICTIVE PLANNING
-
-**Show**: Predictive Planning tab
-
-> "ML.FORECAST projects Rp 26T collection next year if digital growth continues."
-
-**Action**: Show collection forecast with confidence bands
-
-### [2:15–3:00] ASK AI
-
-**Show**: Ask AI tab
-
-> "Prof. Noor asks: 'Are we on track to meet the annual collection target?'"
-
-**Action**: Type target tracking question
-
-### [3:00–3:45] ARCHITECTURE & DATA
-
-**Show**: Architecture & Data tab
-
-> "Six Snowflake capabilities, six AWS services."
-
-**Action**: Walk through architecture diagram
-
+- Indonesia's zakat potential estimated at US$14B — only Rp 21T (US$1.3B) collected formally (BAZNAS)
+- Digital zakat collection grew 45% in 2023 as fintech platforms expanded reach (BAZNAS)
+- Zakat economic empowerment programs show 20-25% poverty graduation rates within 2 years (World Bank Islamic Finance)
+- Indonesia has 87% Muslim population (237 million) — largest Islamic economy globally (Pew Research)
 
 ---
-
-## Key Demo Differentiators
-
-1. **ML.FORECAST on zakat collection trends** — Only demo using ML.FORECAST for Islamic social finance collection prediction
-2. **Ramadan seasonal surge planning** — ML-enabled resource planning for annual zakat collection peak
-3. **Poverty graduation rate tracking** — Unique impact metric for zakat economic empowerment programs
-4. **Indonesian zakat national context** — US$14B potential, 2M+ muzakki, 34 provinces, 8 asnaf distribution model
-
-
----
-
-## Demo Prep Checklist
-
-### Data Verification
-- [ ] `SELECT COUNT(*) FROM ZAKAT_MANAGEMENT.RAW.MUZAKKI` → 2000000
-- [ ] `SELECT COUNT(*) FROM ZAKAT_MANAGEMENT.RAW.COLLECTIONS` → 5000000
-- [ ] `SELECT COUNT(*) FROM ZAKAT_MANAGEMENT.RAW.MUSTAHIK` → 500000
-
-### ML Model Verification
-- [ ] `SELECT COUNT(*) FROM ZAKAT_MANAGEMENT.ML.COLLECTION_FORECAST_RESULTS` → >0
-
-### AI/Agent Verification
-- [ ] `SELECT COUNT(*) FROM ZAKAT_MANAGEMENT.AI.MUSTAHIK_CLASSIFICATION` → 500000
-
+Generated from `generator/demo_specs/aws-indonesia-islamic-finance-zakat.json`. Do not hand-edit: run
+`python3 generator/gen_repo_docs.py aws-indonesia-islamic-finance-zakat` instead.
