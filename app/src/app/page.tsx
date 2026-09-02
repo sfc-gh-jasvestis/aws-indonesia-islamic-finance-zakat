@@ -32,15 +32,22 @@ export default function HomePage() {
       .catch(() => {});
   }, []);
 
+
+  // KPI values come from /api/data, which reads CURATED.KPI_SUMMARY. The literal
+  // stays as a fallback so the card still renders if the API is unavailable.
+  const kpiVal = (title: string, fallback: string): string =>
+    (data?.kpiCards as { title: string; value: string }[] | undefined)
+      ?.find((k) => k.title === title)?.value ?? fallback;
+
   const title = narrative?.title || 'SEA AWS Demo';
 
   const executiveCockpit = (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <KPICard title="Zakat Collected (YTD)" value="Rp 18.4T" status="neutral" />
-        <KPICard title="Beneficiaries Reached" value="8.4M" status="neutral" />
-        <KPICard title="Distribution Efficiency" value="94%" status="neutral" />
-        <KPICard title="Collection Growth" value="+12%" status="neutral" />
+        <KPICard title="Zakat Collected (YTD)" value={kpiVal('Zakat Collected (YTD)', 'Rp 18.4T')} status="neutral" />
+        <KPICard title="Beneficiaries Reached" value={kpiVal('Beneficiaries Reached', '8.4M')} status="neutral" />
+        <KPICard title="Distribution Efficiency" value={kpiVal('Distribution Efficiency', '94%')} status="neutral" />
+        <KPICard title="Collection Growth" value={kpiVal('Collection Growth', '+12%')} status="neutral" />
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="lg:col-span-1">
@@ -87,9 +94,9 @@ export default function HomePage() {
   const domainTab1 = (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <KPICard title="Poverty Alleviation" value="1.2M families" />
-        <KPICard title="Education Scholarships" value="84K" />
-        <KPICard title="Healthcare Support" value="420K" />
+        <KPICard title="Poverty Alleviation" value={kpiVal('Poverty Alleviation', '1.2M families')} />
+        <KPICard title="Education Scholarships" value={kpiVal('Education Scholarships', '84K')} />
+        <KPICard title="Healthcare Support" value={kpiVal('Healthcare Support', '420K')} />
       </div>
       <Chart
         data={data?.detail || [{ x: 'Mon', y: 24 }, { x: 'Tue', y: 28 }, { x: 'Wed', y: 22 }, { x: 'Thu', y: 31 }, { x: 'Fri', y: 26 }, { x: 'Sat', y: 19 }, { x: 'Sun', y: 23 }]}
