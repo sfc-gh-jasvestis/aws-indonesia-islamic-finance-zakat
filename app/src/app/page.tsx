@@ -53,6 +53,7 @@ export default function HomePage() {
         <div className="lg:col-span-1">
           <GeoMap
             country="indonesia"
+            labels={{ entity: 'Provinces', event: 'Collections', alert: 'Disbursement Gaps' }}
             regions={data?.regions}
             markers={[{"label": "Jakarta", "value": "HQ: Rp 8.4T AUM", "color": "blue", "size": "lg"}, {"label": "Surabaya", "value": "Regional: Rp 2.1T", "color": "green", "size": "md"}, {"label": "Bandung", "value": "Branch network", "color": "green", "size": "md"}, {"label": "Medan", "value": "N.Sumatra hub", "color": "green", "size": "sm"}]}
             routes={[]}
@@ -83,8 +84,12 @@ export default function HomePage() {
         columns={[
           { key: 'id', header: '#' },
           { key: 'name', header: 'Province' },
+          { key: 'region', header: 'Region' },
           { key: 'status', header: 'vs Target' },
-          { key: 'value', header: 'Collection (Rp B)' },
+          { key: 'm1', header: 'Collection (Rp B)' },
+          { key: 'm2', header: 'Collection Growth' },
+          { key: 'events', header: 'Collections' },
+          { key: 'alerts', header: 'Disbursement Gaps' },
         ]}
         data={data?.entities || []}
         title="Regional Collection Performance"
