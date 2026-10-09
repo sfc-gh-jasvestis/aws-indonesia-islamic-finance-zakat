@@ -1,0 +1,77 @@
+{
+  "title": "Zakat and Waqf Distribution Operations",
+  "duration": "6 minutes",
+  "thesis": "Snowflake turns daily collections and programme disbursements at a fictional Indonesian zakat and waqf management organisation into on-time disbursement and donor-channel KPIs, 7-day delay escalation risk scores, transfer rejection anomalies and grounded AI answers, all on curated dynamic tables.",
+  "tabs": [
+    {
+      "id": "executive-cockpit",
+      "persona": { "name": "Siti Rahmawati", "role": "Head of Distribution (fictional)", "avatar": "" },
+      "talking_points": [
+        "On-time disbursement rate, delay cases, escalations to programme review and the IDR value disbursed by 40 distribution programmes in Jakarta, Surabaya, Bandung, Medan and Makassar.",
+        "The programmes cover food assistance, education scholarships, health assistance, disaster relief and economic empowerment. Beneficiary figures are aggregate counts only.",
+        "Collections by donor channel show how much arrives through QRIS, e-wallets and bank transfer compared with payroll deduction and collection counters.",
+        "Every KPI is a numerator over a denominator in a curated dynamic table, so it can be traced back to programme-day rows."
+      ],
+      "show": ["KPI cards", "Daily delay cases", "Delays by reason", "Collections by donor channel", "Programme table"],
+      "call_out": "One governed set of distribution KPIs, traceable to source rows",
+      "transition": { "next_tab": "predictive", "line": "Which programmes should the distribution team watch first?" }
+    },
+    {
+      "id": "predictive",
+      "persona": { "name": "Fajar Nugroho", "role": "Programme Operations Analyst (fictional)", "avatar": "" },
+      "talking_points": [
+        "Snowflake ML classification scores each programme's probability of an escalated disbursement delay in the next 7 days.",
+        "The holdout line shows precision and recall on the most recent labelled days, against the base rate.",
+        "Anomaly detection flags bank transfer rejection rate outliers per programme, and the forecast projects organisation-wide delay volume for 14 days."
+      ],
+      "show": ["Holdout metrics", "Risk by programme", "Delay forecast", "Transfer rejection anomalies"],
+      "call_out": "Honest, evaluated ML inside the data platform",
+      "transition": { "next_tab": "planning", "line": "Are field checks keeping up?" }
+    },
+    {
+      "id": "planning",
+      "persona": { "name": "Siti Rahmawati", "role": "Head of Distribution (fictional)", "avatar": "" },
+      "talking_points": [
+        "Field verification compliance, programme file coverage and pending documents frame the control gaps.",
+        "Verification compliance against escalated cases by programme shows where missed visits and escalations move together; it is an association, not proof of cause.",
+        "The action memo drafts three prioritised actions from the KPI, programme, delay-reason, risk and donor-channel tables only."
+      ],
+      "show": ["Verification compliance and file coverage", "Verification compliance vs escalated cases", "Action memo"],
+      "call_out": "Grounded draft actions, with a human in the loop",
+      "transition": { "next_tab": "live", "line": "What happens when a disbursement is delayed right now?" }
+    },
+    {
+      "id": "live",
+      "persona": { "name": "Fajar Nugroho", "role": "Programme Operations Analyst (fictional)", "avatar": "" },
+      "talking_points": [
+        "Live disbursement events land in RAW.LIVE_DISBURSEMENTS, from the simulator or from Amazon Data Firehose through Snowpipe.",
+        "The Snowflake alert logs delayed disbursements with an SOP hint and the programme's current risk band, then emails the on-call distribution officer."
+      ],
+      "show": ["Events loaded and lag", "Latest disbursement events", "Alert log"],
+      "call_out": "From delayed disbursement to case in one platform",
+      "transition": { "next_tab": "ask-ai", "line": "Now ask the data directly." }
+    },
+    {
+      "id": "ask-ai",
+      "persona": { "name": "Siti Rahmawati", "role": "Head of Distribution (fictional)", "avatar": "" },
+      "talking_points": [
+        "The Cortex Agent uses Cortex Analyst over the semantic view for metrics, and Cortex Search over __SOP_COUNT__ synthetic disbursement delay handling SOPs.",
+        "Each answer shows the generated SQL and the SOPs it cited. The SOPs are operational only and make no religious or regulatory rulings."
+      ],
+      "show": ["Ask a sample question", "Generated SQL", "SOP citations"],
+      "call_out": "Natural-language answers you can audit",
+      "transition": { "next_tab": "architecture", "line": "Here is how it is built." }
+    },
+    {
+      "id": "architecture",
+      "persona": { "name": "Siti Rahmawati", "role": "Head of Distribution (fictional)", "avatar": "" },
+      "talking_points": [
+        "Two builds share one core: Snowflake only, or AWS + Snowflake (Data Firehose, Bedrock, QuickSight and Amazon Q).",
+        "Everything shown is synthetic demo data, rebuilt reproducibly from the repo."
+      ],
+      "show": ["Both architecture diagrams"],
+      "call_out": "One governed core, with an optional AWS edge",
+      "transition": { "next_tab": "", "line": "Questions?" }
+    }
+  ]
+}

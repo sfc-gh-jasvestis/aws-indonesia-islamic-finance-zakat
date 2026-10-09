@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "repo": "aws-indonesia-islamic-finance-zakat",
+  "operation": "on-demand",
+  "data_classification": "synthetic demonstration only",
+  "currency": "IDR",
+  "grains": {
+    "RAW.PROGRAMMES": "one row per distribution programme (one programme type run in one Indonesian city)",
+    "RAW.PROGRAMME_DAILY": "one row per programme per day (90 days); beneficiary data aggregate only",
+    "RAW.PROGRAMME_DOCUMENTS": "one row per programme (programme file document snapshot)",
+    "RAW.DONOR_CHANNEL_DAILY": "one row per donor channel per day (90 days)",
+    "CURATED.PERFORMANCE_SUMMARY": "one row per programme",
+    "CURATED.TREND_ANALYSIS": "one row per day",
+    "CURATED.DELAY_SUMMARY": "one row per delay reason",
+    "CURATED.CHANNEL_SUMMARY": "one row per donor channel",
+    "CURATED.KPI_SUMMARY": "one row per KPI",
+    "ML.ESCALATION_RISK_SCORES": "one row per programme (latest day)"
+  },
+  "metrics": {
+    "On-Time Disbursement Rate": "100 * (SUM(DISBURSEMENT_COUNT) - SUM(DELAYED_COUNT)) / SUM(DISBURSEMENT_COUNT)",
+    "Delay Cases": "SUM(DELAYED_COUNT)",
+    "Escalated to Programme Review": "SUM(ESCALATED_COUNT)",
+    "Escalation Rate": "100 * SUM(ESCALATED_COUNT) / SUM(DELAYED_COUNT)",
+    "Beneficiary Notice SLA Breaches": "SUM(SLA_BREACHED)",
+    "Disbursed Value (IDR B)": "SUM(VALUE_IDR) / 1e9",
+    "Disbursements Scheduled": "SUM(DISBURSEMENT_COUNT)",
+    "Field Verification Compliance": "100 * SUM(REVIEW_COMPLETED) / SUM(REVIEW_DUE)",
+    "Programmes Monitored": "COUNT(RAW.PROGRAMMES)",
+    "Programme File Coverage": "100 * SUM(LEAST(ON_FILE_QTY, REQUIRED_QTY)) / SUM(REQUIRED_QTY)",
+    "Programme Documents Pending": "SUM(PENDING_QTY)",
+    "Collections (IDR B)": "SUM(RAW.DONOR_CHANNEL_DAILY.COLLECTED_IDR) / 1e9",
+    "Digital Channel Share": "100 * SUM(COLLECTED_IDR WHERE IS_DIGITAL) / SUM(COLLECTED_IDR)"
+  },
+  "chart_bindings": {
+    "daily_delays": [
+      "CURATED.TREND_ANALYSIS.METRIC_DATE",
+      "DELAYED_COUNT",
+      "ESCALATED_COUNT"
+    ],
+    "delays_by_reason": [
+      "CURATED.DELAY_SUMMARY.DELAY_REASON",
+      "DELAYED_COUNT",
+      "ESCALATED_COUNT"
+    ],
+    "collections_by_channel": [
+      "CURATED.CHANNEL_SUMMARY.CHANNEL",
+      "COLLECTED_IDR"
+    ],
+    "verification_compliance_vs_escalated": [
+      "CURATED.PERFORMANCE_SUMMARY.REVIEW_COMPLIANCE_PCT",
+      "ESCALATED_COUNT"
+    ],
+    "quicksight_escalation_risk": [
+      "ENTITY_ID",
+      "MAX(ESCALATION_PROB_7D)"
+    ]
+  },
+  "freshness": "MAX(EVENT_DATE) is an observation watermark; requestedAt is not freshness",
+  "required_capabilities": {
+    "core_pipeline": "Curated KPIs reconcile to a RAW recomputation (run_core.py checks this on every build)",
+    "escalation_risk_model": "Snowflake ML CLASSIFICATION of P(a disbursement delay on the programme is escalated to programme review in the next 7 days), evaluated on an out-of-time holdout",
+    "forecast_and_anomaly": "14-day organisation-wide delay-volume FORECAST; bank transfer rejection rate ANOMALY_DETECTION (train 75 days, detect last 15)",
+    "search": "Cortex Search SEARCH.DISBURSEMENT_SOP_SEARCH over synthetic disbursement delay handling SOPs (one per programme type and delay reason)",
+    "semantic_analytics": "Semantic view APP.ZAKAT_ANALYTICS and Cortex Agent APP.ZAKAT_AGENT using analyst + search tools",
+    "grounded_ai": "Agent answers return generated SQL and SOP citations; the action memo uses only KPI, programme, delay-reason, risk and donor-channel rows",
+    "quicksight": "DIRECT_QUERY dashboard (programmes, daily delay cases, escalations by programme, escalation risk, disbursement events loaded) through a read-only Snowflake service user",
+    "quicksight_q": "Amazon Q topic over the curated datasets for natural-language questions",
+    "aws_ingestion": "Amazon Data Firehose -> S3 -> Snowpipe AUTO_INGEST into RAW.LIVE_DISBURSEMENTS",
+    "notifications": "APP.LIVE_DELAY_ALERT logs new DELAYED disbursements to APP.ALERT_LOG and emails via SYSTEM$SEND_EMAIL; alert and tasks suspended between demos",
+    "orchestration": "Task graph APP.TASK_REFRESH_CURATED -> APP.TASK_RESCORE_RISK run on demand (EXECUTE TASK)",
+    "app_deployment": "SPCS service APP.ID_ZAKAT_APP; routes /api/data, /api/ask, /api/agent"
+  },
+  "builds": {
+    "snowflake": {
+      "database": "INDONESIA_ZAKAT_SNOWFLAKE",
+      "app_setting": "DEMO_PLATFORM=snowflake",
+      "live_disbursements": "APP.SIMULATE_DISBURSEMENTS(n)",
+      "memo": "Cortex AI_COMPLETE (claude-sonnet-4-5)"
+    },
+    "aws": {
+      "database": "INDONESIA_ZAKAT_AWS",
+      "app_setting": "DEMO_PLATFORM=aws",
+      "live_disbursements": "Amazon Data Firehose -> S3 -> Snowpipe",
+      "memo": "Amazon Bedrock Claude Sonnet 4.5 via APP.BEDROCK_GENERATE",
+      "capabilities": "see required_capabilities"
+    }
+  }
+}
